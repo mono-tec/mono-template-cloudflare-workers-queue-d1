@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloudflare Queue + D1 Sample</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="badge">mono-template / Design & Development Sandbox</p>
+      <h1>Cloudflare Queue + D1 Sample</h1>
+      <p class="lead">
+        Cloudflare Workers / Queue / D1 を利用して、画面操作をイベントとして受け付け、
+        Queue 経由で D1 に保存する最小構成のサンプルです。
+      </p>
+    </section>
+
+    <section class="grid">
+      <section class="card">
+        <h2>イベント送信</h2>
+        <p class="card-text">
+          ボタンを押すと <code>POST /api/events</code> を呼び出し、イベントを Queue に登録します。
+        </p>
+        <button id="sendEventButton" type="button">イベント送信</button>
+        <p id="statusMessage" class="status">まだイベントは送信されていません。</p>
+      </section>
+
+      <section class="card">
+        <h2>イベント件数</h2>
+        <p class="count" id="eventCount">-</p>
+        <button id="refreshButton" type="button" class="secondary">最新情報を取得</button>
+      </section>
+    </section>
+
+    <section class="card list-card">
+      <h2>最新イベント一覧</h2>
+      <p class="card-text">
+        <code>GET /api/events</code> で D1 に保存された最新イベントを取得します。
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>発生日時</th>
+              <th>種別</th>
+              <th>メッセージ</th>
+            </tr>
+          </thead>
+          <tbody id="eventList">
+            <tr>
+              <td colspan="4">まだ取得していません。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card flow-card">
+      <h2>処理の流れ</h2>
+      <div class="flow">
+        <div>Web UI</div>
+        <span>→</span>
+        <div>Workers API</div>
+        <span>→</span>
+        <div>Queue</div>
+        <span>→</span>
+        <div>Consumer</div>
+        <span>→</span>
+        <div>D1</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

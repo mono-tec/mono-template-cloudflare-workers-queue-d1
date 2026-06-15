@@ -1,0 +1,15 @@
+{
+  "name": "mono-template-cloudflare-workers-queue-d1",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 execute event-db --local --file=./migrations/0001_create_event_log.sql",
+    "db:migrate:remote": "wrangler d1 execute event-db --remote --file=./migrations/0001_create_event_log.sql"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}
