@@ -1,7 +1,5 @@
 # Cloudflare Workers Queue + D1 Sample
 
-![mono-template](docs/_shared-images/mono-template.png)
-
 > mono-template
 > Design & Development Sandbox
 
