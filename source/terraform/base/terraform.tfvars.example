@@ -1,0 +1,52 @@
+# ----------------------------------------
+
+# Cloudflare API Token
+
+# ----------------------------------------
+# Cloudflare API Token を指定します
+#
+# 手順：
+# 1. Cloudflare Dashboard にログイン
+# 2. 「My Profile」を選択
+# 3. 「API Tokens」を選択
+# 4. 「Create Token」を選択
+# 5. 「Edit Cloudflare Workers」をベースに作成
+# 6. 作成後、表示された Token をコピー
+#
+cloudflare_api_token = "YOUR_CLOUDFLARE_API_TOKEN"
+# ----------------------------------------
+# Cloudflare Account ID
+# ----------------------------------------
+# Cloudflare Account ID を指定します
+#
+# 手順：
+# 1. Cloudflare Dashboard にログイン
+# 2. 任意の Workers & Pages プロジェクトを開く
+# 3. 画面右側の Account ID を確認
+# 4. Account ID をコピー
+#
+cloudflare_account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+# ----------------------------------------
+# Cloudflare Queue
+# ----------------------------------------
+# 作成する Queue 名を指定します
+#
+queue_name = "event-queue"
+# ----------------------------------------
+# Cloudflare D1 Database
+# ----------------------------------------
+# 作成する D1 Database 名を指定します
+#
+d1_database_name = "event-db"
+# ----------------------------------------
+# Cloudflare Worker Name
+# ----------------------------------------
+# 作成する Worker 名を指定します
+#
+# wrangler.jsonc の name に利用されます。
+# 通常は変更不要です。
+#
+# 例：
+# worker_name = "event-driven-sample"
+#
+worker_name = "event-driven-sample"

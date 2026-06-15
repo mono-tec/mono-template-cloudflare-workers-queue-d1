@@ -101,4 +101,21 @@ _ReSharper*/
 # Cloudflare
 # =========================
 .wrangler/
-wrangler.jsonc
+**/wrangler.jsonc
+!**/wrangler.jsonc.template
+
+# =========================
+# Terraform
+# =========================
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# =========================
+# Secrets
+# =========================
+*.pem
+*.key
+*.tfvars

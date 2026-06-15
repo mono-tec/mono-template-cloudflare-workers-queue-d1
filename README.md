@@ -67,18 +67,34 @@ QueryAPI --> D1
 # ディレクトリ構成
 
 ```text
+# ディレクトリ構成
+
+```text
 /
 ├─ docs/
 ├─ source/
 │  ├─ public/
 │  ├─ src/
+│  ├─ migrations/
+│  ├─ terraform/
+│  │  └─ base/
+│  │      ├─ main.tf
+│  │      ├─ variables.tf
+│  │      ├─ outputs.tf
+│  │      ├─ local_file.tf
+│  │      ├─ terraform.tfvars.example
+│  │      └─ README.md
+│  │
 │  ├─ package.json
-│  ├─ wrangler.jsonc.template
 │  └─ README.md
 │
 ├─ README.md
 └─ LICENSE
 ```
+
+
+Terraform 実行時に Cloudflare Queue / D1 Database を作成し、
+wrangler.jsonc を自動生成します。
 
 docs/docs は PDF生成テンプレートの構成に合わせた配置です。
 
@@ -158,6 +174,7 @@ docs/test/
 | Queue    | Cloudflare Queue   |
 | Database | Cloudflare D1      |
 | Language | JavaScript         |
+| IaC      | Terraform          |
 | Tool     | Wrangler           |
 
 ---
@@ -168,7 +185,7 @@ docs/test/
 
 ```bash
 git clone <repository-url>
-cd mono-template-cloudflare-workers-queue-d1
+cd mono-template-cloudflare-workers-queue-d1/source
 ```
 
 ---
@@ -181,10 +198,41 @@ npm install
 
 ---
 
+## Cloudflare環境構築
+
+Terraformを利用してCloudflareリソースを作成します。
+
+```bash
+cd terraform/base
+
+terraform init
+terraform validate
+terraform plan
+terraform apply
+```
+
+実行後、
+
+* Cloudflare Queue
+* Cloudflare D1 Database
+* wrangler.jsonc
+
+が自動生成されます。
+
+---
+
 ## ローカル実行
 
 ```bash
 npm run dev
+```
+
+---
+
+## D1テーブル作成（ローカル）
+
+```bash
+npx wrangler d1 execute event-db --local --file=./migrations/0001_create_event_log.sql
 ```
 
 ---
@@ -197,25 +245,73 @@ npm run deploy
 
 ---
 
-## Cloudflare設定
+## D1テーブル作成（リモート）
 
-初回セットアップ時は
+```bash
+npx wrangler d1 execute event-db --remote --file=./migrations/0001_create_event_log.sql
+```
 
-wrangler.jsonc.template
+---
 
-を
+# 環境削除
 
-wrangler.jsonc
+Cloudflare Queue と Worker Consumer は相互参照されるため、
 
-へコピーしてください。
+```bash
+terraform destroy
+```
 
-その後、
+のみでは削除できない場合があります。
 
-- D1 Database ID
-- Queue Name
-- Account ID
+その場合は以下の順番で削除してください。
 
-などをご自身の環境に合わせて設定してください。
+## 1. Queue Consumer の紐づけ解除
+
+```bash
+npx wrangler queues consumer worker remove event-queue event-driven-sample
+```
+
+---
+
+## 2. Worker を削除
+
+```bash
+npx wrangler delete event-driven-sample
+```
+
+---
+
+## 3. Terraform 管理リソースを削除
+
+```bash
+cd terraform/base
+
+terraform destroy
+```
+
+---
+
+## 補足
+
+Cloudflare Queue は Consumer として Worker を参照します。
+
+また、Worker は Queue Binding を参照します。
+
+そのため、
+
+```text
+Queue
+↓
+Worker Consumer
+↓
+Worker
+↓
+Queue Binding
+```
+
+の関係が残っている状態では削除できません。
+
+先に Queue Consumer の紐づけを解除してから Worker を削除してください。
 
 ---
 
