@@ -69,7 +69,6 @@ QueryAPI --> D1
 
 ```text
 /
-├─ docs/
 ├─ source/
 │  ├─ public/
 │  ├─ src/
@@ -98,69 +97,25 @@ docs/docs は PDF生成テンプレートの構成に合わせた配置です。
 
 ---
 
-# 設計書一覧
-
-本プロジェクトでは、
-設計工程を学習できるよう
-各種設計書を同梱しています。
-
-## プロジェクト管理
-
-```text
-docs/project-management/
-├─ project-plan.md
-└─ risk-register.md
-```
+docs/docs は PDF生成テンプレートの構成に合わせた配置です。
 
 ---
 
-## 概念設計
+# ドキュメント管理
 
-```text
-docs/concept/
-└─ concept-design.md
-```
+本プロジェクトの設計書・プロジェクト計画書は、以下のドキュメント管理用Repositoryへ移動しました。
 
----
+* https://github.com/mono-tec/mono-docs-cloudflare-workers-queue-d1
 
-## 基本設計
+実装テンプレートRepositoryはこちらです。
 
-```text
-docs/design/
-├─ specifications.md
-└─ system-architecture.md
-```
+* https://github.com/mono-tec/mono-template-cloudflare-workers-queue-d1
 
----
+ドキュメント管理用Repositoryでは、`project-plan.md` を正本（Source of Truth）として管理しています。
 
-## 外部設計
+プロジェクト計画書から GitHub Issue 用JSONを自動生成し、GitHub Milestone および GitHub Issue と同期することで、Phase・WBS単位で進捗管理を行っています。
 
-```text
-docs/ui/
-├─ screen-flow.md
-└─ UI_0101_EventMonitor.md
-```
-
----
-
-## 内部設計
-
-```text
-docs/internal/
-├─ internal-api-spec.md
-├─ internal-queue-design.md
-└─ internal-design-db.md
-```
-
----
-
-## テスト
-
-```text
-docs/test/
-├─ test-plan.md
-└─ test-spec.md
-```
+本Repositoryでは、テンプレート実装を管理し、設計書およびプロジェクト管理はドキュメント管理用Repositoryで実施します。
 
 ---
 
@@ -184,14 +139,6 @@ docs/test/
 ```bash
 git clone <repository-url>
 cd mono-template-cloudflare-workers-queue-d1/source
-```
-
----
-
-## 依存関係インストール
-
-```bash
-npm install
 ```
 
 ---
